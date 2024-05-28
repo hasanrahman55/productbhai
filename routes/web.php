@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// page url
+
+Route::get('/',[ProductController::class,'index'])->name('home');
+Route::get('/create',[ProductController::class,'create'])->name('create');
+
+
+
+
+Route::post('/store',[ProductController::class,'store'])->name('store');
