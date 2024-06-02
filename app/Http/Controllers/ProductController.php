@@ -31,6 +31,11 @@ class ProductController extends Controller
     public function store(Request $request)
     {
 
+      $file =  $request->file('image');
+
+      $path = $file->store('image','public');
+
+
 
         // $file = $request->file('image');
         // $path=   $file?$file->Store('images','public'):null;
@@ -40,7 +45,7 @@ class ProductController extends Controller
         'details'=>$request->details,
         'status'=>$request->status,
         'stock'=>$request->stock,
-        // 'image'=>$path,
+        'image'=>$path,
        ]);
 
     return  redirect()->route('home');
@@ -73,6 +78,8 @@ class ProductController extends Controller
 
      $product =   Product::find($id);
 
+     //image update home workk
+
         $product-> update([
             'title'=>$request->title,
             'details'=>$request->details,
@@ -94,6 +101,12 @@ class ProductController extends Controller
         // if ($product->image) {
         //     Storage::disk('public')->delete($product->image);
         // }
+
+
+      $product = Product::find($id);
+      Storage::disk('public')->delete($product->image);
+
+
         
        
         Product::where('id',$id)->delete();
