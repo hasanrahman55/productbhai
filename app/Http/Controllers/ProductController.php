@@ -32,15 +32,15 @@ class ProductController extends Controller
     {
 
 
-        $file = $request->file('image');
-        $path=   $file?$file->Store('images','public'):null;
+        // $file = $request->file('image');
+        // $path=   $file?$file->Store('images','public'):null;
 
        Product::create([
         'title'=>$request->title,
         'details'=>$request->details,
         'status'=>$request->status,
         'stock'=>$request->stock,
-        'image'=>$path,
+        // 'image'=>$path,
        ]);
 
     return  redirect()->route('home');
@@ -90,10 +90,10 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
 
-        $product =Product::find($id);
-        if ($product->image) {
-            Storage::disk('public')->delete($product->image);
-        }
+        // $product =Product::find($id);
+        // if ($product->image) {
+        //     Storage::disk('public')->delete($product->image);
+        // }
         
        
         Product::where('id',$id)->delete();
