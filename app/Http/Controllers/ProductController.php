@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -12,7 +13,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-       return view('pages.home');
+      $products =  Product::get();
+       return view('pages.home',compact('products'));
     }
 
     /**
@@ -30,13 +32,15 @@ class ProductController extends Controller
     {
 
 
-    //image url
+        $file = $request->file('image');
+        $path=   $file?$file->Store('images','public'):null;
 
        Product::create([
         'title'=>$request->title,
         'details'=>$request->details,
         'status'=>$request->status,
         'stock'=>$request->stock,
+        'image'=>$path,
        ]);
 
     return  redirect()->route('home');
@@ -53,24 +57,48 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+      $product = Product::find($id);
+
+       
+        return view('pages.edit',compact('product'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request,  $id)
     {
-        //
+
+     $product =   Product::find($id);
+
+        $product-> update([
+            'title'=>$request->title,
+            'details'=>$request->details,
+            'status'=>$request->status,
+            'stock'=>$request->stock,
+           ]);
+
+           return  redirect()->route('home');
     }
 
     /**
      * Remove the specified resource from storage.
      */
+
     public function destroy(string $id)
     {
-        //
+
+        $product =Product::find($id);
+        if ($product->image) {
+            Storage::disk('public')->delete($product->image);
+        }
+        
+       
+        Product::where('id',$id)->delete();
+        return  redirect()->route('home');
+        
     }
+  
 }

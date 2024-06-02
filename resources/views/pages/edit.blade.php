@@ -11,25 +11,28 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <form action="{{Route('store')}}" method="POST" enctype="multipart/form-data">
+            <form action="{{Route('update',$product->id)}}" method="POST" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
+
+                <h1>{{$product->id}}</h1>
+
                 <div class="form-group">
                     <label for="title">Title</label>
-                    <input type="text" name="title" class="form-control" required>
+                    <input type="text" name="title" class="form-control" value="{{$product->title}}" required>
                 </div>
             
                 <div class="form-group">
                     <label for="status">Status</label>
-                    <input type="text" name="status" class="form-control" required>
+                    <input type="text" name="status" class="form-control"  value="{{$product->status}}"  required>
                 </div>
                 <div class="form-group">
                     <label for="stock">stock</label>
-                    <input type="text" name="stock" class="form-control" required>
+                    <input type="text" name="stock" class="form-control" value="{{$product->stock}}"  required>
                 </div>
-                
                 <div class="form-group">
                     <label for="details">Details</label>
-                    <textarea name="details" class="form-control" rows="4" required></textarea>
+                    <textarea name="details" class="form-control" rows="4" required>{{ $product->details }}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="image">Image</label>

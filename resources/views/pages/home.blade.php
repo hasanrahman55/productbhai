@@ -11,25 +11,32 @@
         </div>
     </div>
     <div class="row">
-    
-            <div class="col-lg-4 mb-4">
-                <div class="card">
-                    {{-- @if ($product->image)
-                        <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top" alt="{{ $product->title }}">
-                    @endif --}}
-                    <div class="card-body">
-                        <h5 class="card-title">title</h5>
-                        <p class="card-text">detail</p>
-                        <a href="" class="btn btn-primary">View</a>
-                        <a href="" class="btn btn-warning">Edit</a>
-                        <form action="" method="POST" class="d-inline">
-                            @csrf
-                          
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
-                    </div>
+
+
+        @foreach ($products as $item)
+        <div class="col-lg-4 mb-4">
+            <div class="card">
+                @if ($item->image)
+                    <img src="{{ URL('storage/'. $item->image) }}" class="card-img-top" alt="{{ $item->title }}">
+                @endif
+                <div class="card-body">
+                    <h5 class="card-title">{{$item->title}}</h5>
+                    <p class="card-text">{{$item->details}}</p>
+                    <a href="" class="btn btn-primary">View</a>
+                    <a href="{{Route('edit',$item->id)}}" class="btn btn-warning">Edit</a>
+                    <form action="{{Route('delete',$item->id)}}" method="POST" class="d-inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+
+                   
                 </div>
             </div>
+        </div>
+        @endforeach
+    
+        
        
     </div>
 </div>

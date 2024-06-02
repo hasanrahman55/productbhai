@@ -18,8 +18,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',[ProductController::class,'index'])->name('home');
 Route::get('/create',[ProductController::class,'create'])->name('create');
+Route::get('/edit/{id}',[ProductController::class,'edit'])->name('edit');
 
 
 
 
 Route::post('/store',[ProductController::class,'store'])->name('store');
+Route::delete('/delete/{id}',[ProductController::class,'destroy'])->name('delete');
+Route::put('/update/{id}',[ProductController::class,'update'])->name('update');
